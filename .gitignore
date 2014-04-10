@@ -1,0 +1,13 @@
+# C/C++
+*.o
+
+# NetBeans
+nbproject/
+
+# CppUnit
+cppunitresults.xml
+result/
+
+# Build files
+build/
+bin/
