@@ -8,16 +8,23 @@
 #ifndef MFCC_HPP
 #define	MFCC_HPP
 
+#include "global.hpp"
 #include "signal.hpp"
 
-class Mfcc {
-public:
-    Mfcc();
-//    Mfcc(const Mfcc& orig);
-    virtual ~Mfcc();
-private:
+namespace Stranger {
+    
+    /**
+     * @brief class for MFCC extract
+     */
+    class STRANGER_EXPORT Mfcc {
+    public:
+        Mfcc();
+    //    Mfcc(const Mfcc& orig);
+        virtual ~Mfcc();
+    private:
 
-};
+    };
+}
 
 #endif	/* MFCC_HPP */
 

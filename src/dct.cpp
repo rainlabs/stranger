@@ -7,41 +7,44 @@
 
 #include "dct.hpp"
 
-Dct::Dct(std::size_t size, std::size_t outputSize) {
-    mSize = size;
-    mOutputSize = outputSize;
-}
-
-//Dct::Dct(const Dct& orig) {
-//}
-
-Dct::~Dct() {
-}
-
-std::vector<double> Dct::execute(std::vector<double> frame) {
-    fftw_plan plan;
-    int i, N = frame.size();
-    std::vector<double> ret;
-    double *in, *out;
+namespace Stranger {
     
-    in =  FftwMalloc(double, N);
-    out = FftwMalloc(double, N);
-    plan = fftw_plan_r2r_1d(N, in, out, FFTW_REDFT10, FFTW_ESTIMATE);
-    
-    for(i = 0; i < N; i++) {
-        in[i] = frame[i];
+    Dct::Dct(std::size_t size, std::size_t outputSize) {
+        mSize = size;
+        mOutputSize = outputSize;
     }
-    
-    fftw_execute(plan);
-    
-    // TODO normalize
-    for(i = 0; i < mOutputSize; i++) {
-        ret.push_back(out[i] / 2.0);
+
+    //Dct::Dct(const Dct& orig) {
+    //}
+
+    Dct::~Dct() {
     }
-    
-    fftw_destroy_plan(plan);
-    fftw_free(in);
-    fftw_free(out);
-    
-    return ret;
+
+    std::vector<SampleType> Dct::execute(std::vector<SampleType> frame) {
+        fftw_plan plan;
+        int i, N = frame.size();
+        std::vector<SampleType> ret;
+        double *in, *out;
+
+        in =  Malloc(SampleType, N);
+        out = Malloc(SampleType, N);
+        plan = fftw_plan_r2r_1d(N, in, out, FFTW_REDFT10, FFTW_ESTIMATE);
+
+        for(i = 0; i < N; i++) {
+            in[i] = frame[i];
+        }
+
+        fftw_execute(plan);
+
+        // TODO normalize
+        for(i = 0; i < mOutputSize; i++) {
+            ret.push_back(out[i] / 2.0);
+        }
+
+        fftw_destroy_plan(plan);
+        fftw_free(in);
+        fftw_free(out);
+
+        return ret;
+    }
 }

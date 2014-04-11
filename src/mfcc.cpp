@@ -7,12 +7,13 @@
 
 #include "mfcc.hpp"
 
-Mfcc::Mfcc() {
+namespace Stranger {
+    Mfcc::Mfcc() {
+    }
+
+    //Mfcc::Mfcc(const Mfcc& orig) {
+    //}
+
+    Mfcc::~Mfcc() {
+    }
 }
-
-//Mfcc::Mfcc(const Mfcc& orig) {
-//}
-
-Mfcc::~Mfcc() {
-}
-

@@ -23,6 +23,7 @@ void FftTest::tearDown() {
 
 void FftTest::plotDft() {
 //    CPPUNIT_ASSERT(mfcc->mDuration     == 30);
+    std::cout << version() << std::endl;
     Signal wav;
     std::string filename = "result/0dft";
     vector2d matrix;

@@ -16,8 +16,9 @@ class FftTest;
 #include <iostream>
 #include <math.h>
 #include "test_helper.hpp"
-#include "signal.hpp"
-#include "fft.hpp"
+#include "stranger.hpp"
+
+using namespace Stranger;
 
 class FftTest : public CPPUNIT_NS::TestFixture {
     CPPUNIT_TEST_SUITE(FftTest);

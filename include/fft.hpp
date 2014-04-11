@@ -8,35 +8,37 @@
 #ifndef FFT_HPP
 #define	FFT_HPP
 
-#include <vector>
-#include <complex>
-#include <exception>
-#include <fftw3.h>
-#include "misc.hpp"
+#include "global.hpp"
 #include "window.hpp"
 
-class Fft {
-public:
-    Fft(std::size_t size = 512, std::size_t windowType = 0);
-//    Fft(const Fft& orig);
-    virtual ~Fft();
+namespace Stranger {
     
     /**
-     * @brief execute fft
-     * @return complex vector with size (fftSize / 2 + 1)
+     * @brief Class for fft execute (base on fftw3)
      */
-    std::vector< std::complex<double> > execute(std::vector<double> frame);
-    
-    /**
-     * @brief execute fft with transform to real
-     * @return real vector
-     */
-    std::vector<double> execute2r(std::vector<double> frame);
-private:
-    std::size_t mSize;
-    std::vector<double> mWindow;
+    class STRANGER_EXPORT Fft {
+    public:
+        Fft(std::size_t size = 512, std::size_t windowType = 0);
+    //    Fft(const Fft& orig);
+        virtual ~Fft();
 
-};
+        /**
+         * @brief execute fft
+         * @return complex vector with size (fftSize / 2 + 1)
+         */
+        SpectrumType execute(std::vector<SampleType> frame);
+
+        /**
+         * @brief execute fft with transform to real
+         * @return real vector
+         */
+        std::vector<SampleType> execute2r(std::vector<SampleType> frame);
+    private:
+        std::size_t mSize;
+        std::vector<SampleType> mWindow;
+
+    };
+}
 
 #endif	/* FFT_HPP */
 
