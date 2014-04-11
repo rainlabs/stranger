@@ -18,8 +18,11 @@
 #define Malloc(type,n) (type *)malloc((n)*sizeof(type)) // from svm_train.c
 #define STRANGER_ENERGY_FLOOR 1.0 // from spro.h
 
-#ifndef STRANGER_EXPORT
-#define STRANGER_EXPORT
+// dllimport || dllexport
+#if defined (_WIN32) && defined(BUILD_SHARED_LIBS)
+#    define STRANGER_EXPORT  __declspec(dllimport)
+#else
+#    define STRANGER_EXPORT
 #endif
 
 /**

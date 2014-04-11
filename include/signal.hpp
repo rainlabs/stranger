@@ -3,6 +3,7 @@
 
 #include <sndfile.h>
 #include "global.hpp"
+#include "misc.hpp"
 
 namespace Stranger {
     /**

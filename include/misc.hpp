@@ -30,6 +30,14 @@ namespace Stranger {
         * @return 
         */
        static std::vector<SampleType> normalize(std::vector<SampleType> frame);
+       
+       /**
+        * @brief transform ms time into frame count
+        * @param ms
+        * @param sampleRate of signal
+        * @return frame size
+        */
+       static SizeType msToFrameSize(SizeType ms, SizeType sampleRate);
     };
     
 }

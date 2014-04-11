@@ -68,7 +68,7 @@ namespace Stranger {
     }
     
     vector2d Signal::split(float length, float shift) {
-        return split( SizeType(length / 1000.0 * getSampleRate()), SizeType(shift / 1000.0 * getSampleRate()) );
+        return split( Misc::msToFrameSize(length, getSampleRate()), Misc::msToFrameSize(shift, getSampleRate()) );
     }
     
     std::size_t Signal::getChannelCount() {

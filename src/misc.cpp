@@ -37,4 +37,8 @@ namespace Stranger {
         
         return ret;
     }
+    
+    SizeType Misc::msToFrameSize(SizeType ms, SizeType sampleRate) {
+        return SizeType(ms / 1000.0 * sampleRate);
+    }
 }
