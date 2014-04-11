@@ -1,6 +1,6 @@
 /* 
  * File:   global.hpp
- * Author: rain
+ * Author: Vladimir Zyablitskiy <https://github.com/rainlabs>
  *
  * Created on 11 апреля 2014 г., 12:26
  */
@@ -16,6 +16,7 @@
 
 #define FftwMalloc(type,n) (type *)fftw_malloc((n)*sizeof(type)) // from svm_train.c
 #define Malloc(type,n) (type *)malloc((n)*sizeof(type)) // from svm_train.c
+#define STRANGER_ENERGY_FLOOR 1.0 // from spro.h
 
 #ifndef STRANGER_EXPORT
 #define STRANGER_EXPORT
@@ -28,8 +29,9 @@ namespace Stranger
 {
     /**
      * Library version in an easily comparable format.
+     * 0x00(MAJOR)00(MINOR)00(PATCH)
      */
-    const long VERSION = 0x000001;
+    const int VERSION = 0x000100;
     
     /**
      * Library status (dev, stable, beta, alpha)
@@ -49,7 +51,7 @@ namespace Stranger
     /**
      * Our standard complex number type, using double precision.
      */
-    typedef std::complex<double> ComplexType;
+    typedef std::complex<SampleType> ComplexType;
 
     /**
      * Spectrum type - a vector of complex values.
@@ -59,7 +61,7 @@ namespace Stranger
     /**
      * vector2d - a vector of 2 dimensional
      */
-    typedef std::vector< std::vector<double> > vector2d;
+    typedef std::vector< std::vector<SampleType> > vector2d;
 }
 
 

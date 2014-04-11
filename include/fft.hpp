@@ -1,6 +1,6 @@
 /* 
  * File:   fft.hpp
- * Author: rain
+ * Author: Vladimir Zyablitskiy <https://github.com/rainlabs>
  *
  * Created on 10 апреля 2014 г., 22:41
  */
@@ -21,6 +21,8 @@ namespace Stranger {
         Fft(SizeType size = 512, SizeType windowType = 0);
     //    Fft(const Fft& orig);
         virtual ~Fft();
+        
+        SpectrumType apply(std::vector<SampleType> frame);
 
         /**
          * @brief execute fft

@@ -1,6 +1,6 @@
 /* 
  * File:   trif_bank.cpp
- * Author: rain
+ * Author: Vladimir Zyablitskiy <https://github.com/rainlabs>
  * 
  * Created on 11 апреля 2014 г., 14:18
  */
@@ -79,7 +79,7 @@ namespace Stranger {
                 m = std::abs( fftOut[j] );
                 s += m * (1.0 - a * (j - from));
             }
-            ret[i] = (s < SPRO_ENERGY_FLOOR) ? (SampleType)log(SPRO_ENERGY_FLOOR) : (SampleType)log(s);
+            ret[i] = (s < STRANGER_ENERGY_FLOOR) ? (SampleType)log(STRANGER_ENERGY_FLOOR) : (SampleType)log(s);
 //            std::cout << ret[i] << "; ";
         }
 //        std::cout << std::endl;

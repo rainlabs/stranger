@@ -1,6 +1,6 @@
 /* 
  * File:   test_helper.h
- * Author: rain
+ * Author: Vladimir Zyablitskiy <https://github.com/rainlabs>
  *
  * Created on 2 апреля 2014 г., 12:11
  */

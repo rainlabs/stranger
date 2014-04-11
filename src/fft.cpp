@@ -1,6 +1,6 @@
 /* 
  * File:   fft.cpp
- * Author: rain
+ * Author: Vladimir Zyablitskiy <https://github.com/rainlabs>
  * 
  * Created on 10 апреля 2014 г., 22:41
  */
@@ -21,6 +21,10 @@ namespace Stranger {
     //    mWindow.clear();
     }
 
+    SpectrumType Fft::apply(std::vector<SampleType> frame) {
+        return execute(frame);
+    }
+    
     SpectrumType Fft::execute(std::vector<SampleType> frame, SizeType size) {
         std::vector< std::complex<double> > ret;
         fftw_complex *in, *out;

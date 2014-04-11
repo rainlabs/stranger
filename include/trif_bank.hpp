@@ -1,6 +1,6 @@
 /* 
  * File:   trif_bank.hpp
- * Author: rain
+ * Author: Vladimir Zyablitskiy <https://github.com/rainlabs>
  *
  * Created on 11 апреля 2014 г., 14:18
  */
@@ -10,10 +10,8 @@
 
 #include "global.hpp"
 #include <math.h>
-#include <iostream>
 
 #define Round(x) ((int)ceil(x) - x < x - (int)floor(x)) ? (int)ceil(x) : (int)floor(x)
-#define SPRO_ENERGY_FLOOR 1.0 // from spro.h
 
 namespace Stranger {
     class STRANGER_EXPORT TrifBank {

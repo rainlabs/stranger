@@ -1,7 +1,7 @@
 CXX        = g++
 CXXFLAGS   = -c -Wall -std=c++0x
 LDFLAGS    = -lsndfile -lfftw3
-LDYNAMIC   = -lspro
+#RDYNAMIC   = -rdynamic -lspro
 SRCDIR     = src
 TESTDIR    = tests
 SOURCES    = $(shell find $(SRCDIR)/ -name '*.cpp')
@@ -40,7 +40,7 @@ debug: release
 test: $(MAIN) $(TSOURCES) $(SOURCES) $(BINDIR)/$(TARGET)
 
 $(BINDIR)/$(TARGET): $(OBJECTS)
-	$(CXX) $(LDFLAGS) $(OBJECTS) -o $@ -rdynamic $(LDYNAMIC)
+	$(CXX) $(LDFLAGS) $(OBJECTS) -o $@ $(RDYNAMIC)
 
 $(OBJECTS): | $(BUILDDIR)
 
@@ -59,4 +59,4 @@ $(BUILDDIR)/%.o: $(TESTDIR)/%.cpp
 	$(CXX) $(CXXFLAGS) $(INCLUDES) $< -o $@
 
 clean:
-	find -name *.o -delete && find bin/ -name $(TARGET) -delete
+	find -name *.o -delete && find bin/ -name $(TARGET) -delete && rm -rf result/*

@@ -1,6 +1,6 @@
 /*
  * File:   TestRunner.cpp
- * Author: rain
+ * Author: Vladimir Zyablitskiy <https://github.com/rainlabs>
  *
  * Created on 30.03.2014, 19:28:27
  */
