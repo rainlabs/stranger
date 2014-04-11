@@ -11,6 +11,7 @@
 #include "global.hpp"
 #include "signal.hpp"
 #include "window.hpp"
+#include "trif_bank.hpp"
 #include "fft.hpp"
 #include "dct.hpp"
 #include "mfcc.hpp"

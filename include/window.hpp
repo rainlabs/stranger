@@ -7,7 +7,7 @@
 namespace Stranger {
     
     /**
-     * @brief window functions
+     * @brief Weighting windows
      */
     class STRANGER_EXPORT Window
     {
@@ -28,6 +28,12 @@ namespace Stranger {
         static std::vector<SampleType> blackmanHarris(std::size_t size);
         static std::vector<SampleType> hamming(std::size_t size);
         static std::vector<SampleType> hann(std::size_t size);
+        
+        /**
+         * @brief default window with rectangular full size vector (1 for each sample)
+         * @param size
+         * @return 
+         */
         static std::vector<SampleType> none(std::size_t size);
     };
 }

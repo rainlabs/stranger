@@ -9,7 +9,7 @@
 
 namespace Stranger {
     
-    Fft::Fft(std::size_t size, std::size_t windowType) {
+    Fft::Fft(SizeType size, SizeType windowType) {
         mSize = size;
         mWindow = Window::get(size, windowType);
     }
@@ -21,11 +21,12 @@ namespace Stranger {
     //    mWindow.clear();
     }
 
-    SpectrumType Fft::execute(std::vector<SampleType> frame) {
+    SpectrumType Fft::execute(std::vector<SampleType> frame, SizeType size) {
         std::vector< std::complex<double> > ret;
         fftw_complex *in, *out;
         fftw_plan plan;
         int i;
+        SizeType outSize = (size == 0) ? frame.size() : size;
 
         if(frame.size() != mSize) {
             throw std::exception(); // TODO named errors
@@ -40,7 +41,7 @@ namespace Stranger {
             in[i][1] = 0;
         }
         fftw_execute(plan);
-        for(i = 0; i < mSize / 2 + 1; i++) {
+        for(i = 0; i < outSize; i++) {
             ret.push_back( ComplexType(out[i][0], out[i][1]) );
         }
 
@@ -51,9 +52,9 @@ namespace Stranger {
         return ret;
     }
 
-    std::vector<double> Fft::execute2r(std::vector<SampleType> frame) {
+    std::vector<double> Fft::execute2r(std::vector<SampleType> frame, SizeType size) {
         std::vector<SampleType> ret;
-        SpectrumType c = execute(frame);
+        SpectrumType c = execute(frame, size);
 
         for(auto x : c) {
             ret.push_back( std::abs(x) );

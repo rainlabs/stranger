@@ -48,12 +48,19 @@ namespace Stranger {
        bool loadFromFile(const std::string& filename );
 
        /**
-        * @brief split samples by size with overlap
+        * @brief split samples by size with shift
         * @param size
-        * @param overlap
+        * @param shift
         * @return 2d vector
         */
-       vector2d split(std::size_t size, std::size_t overlap);
+       vector2d split(SizeType size, SizeType shift = 0);
+       
+       /**
+        * @brief split samples by length and shift in ms
+        * @param length time length in ms
+        * @param shift time length in ms
+        */
+       vector2d split(float length, float shift = 0);
    private:
        void clean();
        std::vector<SampleType> mSamples;

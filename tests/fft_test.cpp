@@ -23,7 +23,6 @@ void FftTest::tearDown() {
 
 void FftTest::plotDft() {
 //    CPPUNIT_ASSERT(mfcc->mDuration     == 30);
-    std::cout << version() << std::endl;
     Signal wav;
     std::string filename = "result/0dft";
     vector2d matrix;
@@ -32,10 +31,10 @@ void FftTest::plotDft() {
     Fft fft(256, Window::HAMMING);
     wav.loadFromFile("fixtures/voice1.wav");
     float hzInterval = 256.0 / wav.getSampleRate();
-    vector2d frames = wav.split(256, 128);
+    vector2d frames = wav.split(SizeType(256), SizeType(128));
     
     for(auto frame : frames) {
-        matrix.push_back( fft.execute2r(frame) );
+        matrix.push_back( fft.execute2r(frame, 128) );
     }
     
     for(i = 0; i < matrix.size(); i++) {
@@ -48,6 +47,69 @@ void FftTest::plotDft() {
         x.push_back( i );
     for(i = 0; i < matrix.back().size(); i++)
         y.push_back( i*hzInterval );
+    
+    TestHelper::saveMatrix(matrix, x, y, filename);
+    TestHelper::plotMatrix(filename);
+}
+
+void FftTest::plotDftOnTrifBank() {
+    Signal wav;
+    std::string filename = "result/1dftOnTrifBank";
+    vector2d matrix;
+    std::vector<float> x, y;
+    int i;
+    Fft fft(256, Window::HAMMING);
+    wav.loadFromFile("fixtures/voice1.wav");
+    TrifBank bank(24, 256, wav.getSampleRate());
+    float hzInterval = 256.0 / wav.getSampleRate();
+    vector2d frames = wav.split(SizeType(256), SizeType(128));
+    
+    for(auto frame : frames) {
+        matrix.push_back( bank.apply( fft.execute(frame) ) );
+    }
+    
+//    for(i = 0; i < matrix.size(); i++) {
+//        for(int j = 0; j < matrix[i].size(); j++) {
+//            matrix[i][j] = log(matrix[i][j]);
+//        }
+//    }
+    
+    for(i = 0; i < matrix.size(); i++)
+        x.push_back( i );
+    for(i = 0; i < matrix.back().size(); i++)
+        y.push_back( i );
+    
+    TestHelper::saveMatrix(matrix, x, y, filename);
+    TestHelper::plotMatrix(filename);
+}
+
+void FftTest::plotMfcc() {
+    Signal wav;
+    std::string filename = "result/2mfcc";
+    vector2d matrix;
+    std::vector<float> x, y;
+    int i;
+    Fft fft(256, Window::HAMMING);
+    wav.loadFromFile("fixtures/voice1.wav");
+    TrifBank bank(24, 256, wav.getSampleRate());
+    Dct dct;
+    float hzInterval = 256.0 / wav.getSampleRate();
+    vector2d frames = wav.split(SizeType(256), SizeType(128));
+    
+    for(auto frame : frames) {
+        matrix.push_back( dct.apply( bank.apply( fft.execute(frame) ) ) );
+    }
+    
+//    for(i = 0; i < matrix.size(); i++) {
+//        for(int j = 0; j < matrix[i].size(); j++) {
+//            matrix[i][j] = log(matrix[i][j]);
+//        }
+//    }
+    
+    for(i = 0; i < matrix.size(); i++)
+        x.push_back( i );
+    for(i = 0; i < matrix.back().size(); i++)
+        y.push_back( i );
     
     TestHelper::saveMatrix(matrix, x, y, filename);
     TestHelper::plotMatrix(filename);

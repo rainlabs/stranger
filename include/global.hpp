@@ -37,6 +37,11 @@ namespace Stranger
     const char* const STATUS = "dev";
 
     /**
+     *
+     */
+    typedef unsigned short SizeType;
+    
+    /**
      * Sample value type.
      */
     typedef double SampleType;

@@ -24,6 +24,8 @@ class FftTest : public CPPUNIT_NS::TestFixture {
     CPPUNIT_TEST_SUITE(FftTest);
 
     CPPUNIT_TEST(plotDft);
+    CPPUNIT_TEST(plotDftOnTrifBank);
+    CPPUNIT_TEST(plotMfcc);
     CPPUNIT_TEST_SUITE_END();
 
 public:
@@ -34,6 +36,8 @@ public:
 
 private:
     void plotDft();
+    void plotDftOnTrifBank();
+    void plotMfcc();
 };
 
 #endif	/* FFT_TEST_HPP */

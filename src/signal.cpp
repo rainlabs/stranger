@@ -12,11 +12,11 @@ namespace Stranger {
     }
 
     Signal::iterator Signal::begin() {
-        mSamples.begin();
+        return mSamples.begin();
     }
 
     Signal::iterator Signal::end() {
-        mSamples.end();
+        return mSamples.end();
     }
 
     bool Signal::isLoaded() {
@@ -41,10 +41,21 @@ namespace Stranger {
         return true;
     }
 
-    vector2d Signal::split(std::size_t size, std::size_t overlap) {
+    vector2d Signal::split(SizeType size, SizeType shift) {
         vector2d ret;
-        int i, step;
-        step = size - overlap;
+        std::size_t i;
+        SizeType step;
+        step = shift;
+        
+        // TODO exception
+        if (size == 0) {
+            throw std::exception();
+        }
+        
+        /* set default shift as size */
+        if (step == 0) {
+            step = size;
+        }
 
         // TODO add zeros elements
         for(i = 0; i < mSamples.size() - size; i+= step) {
@@ -54,6 +65,10 @@ namespace Stranger {
         }
 
         return ret;
+    }
+    
+    vector2d Signal::split(float length, float shift) {
+        return split( SizeType(length / 1000.0 * getSampleRate()), SizeType(shift / 1000.0 * getSampleRate()) );
     }
 
     std::size_t Signal::getChannelCount() {

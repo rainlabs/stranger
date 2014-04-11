@@ -18,23 +18,25 @@ namespace Stranger {
      */
     class STRANGER_EXPORT Fft {
     public:
-        Fft(std::size_t size = 512, std::size_t windowType = 0);
+        Fft(SizeType size = 512, SizeType windowType = 0);
     //    Fft(const Fft& orig);
         virtual ~Fft();
 
         /**
          * @brief execute fft
-         * @return complex vector with size (fftSize / 2 + 1)
+         * @param frame signal
+         * @param size to return
+         * @return complex vector
          */
-        SpectrumType execute(std::vector<SampleType> frame);
+        SpectrumType execute(std::vector<SampleType> frame, SizeType size = 0);
 
         /**
          * @brief execute fft with transform to real
          * @return real vector
          */
-        std::vector<SampleType> execute2r(std::vector<SampleType> frame);
+        std::vector<SampleType> execute2r(std::vector<SampleType> frame, SizeType size = 0);
     private:
-        std::size_t mSize;
+        SizeType mSize;
         std::vector<SampleType> mWindow;
 
     };

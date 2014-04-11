@@ -9,6 +9,7 @@
 #define	DCT_HPP
 
 #include "global.hpp"
+#include <math.h>
 
 namespace Stranger {
     
@@ -17,18 +18,22 @@ namespace Stranger {
      */
     class STRANGER_EXPORT Dct {
     public:
-        Dct(std::size_t size = 24, std::size_t outputSize = 13);
+        Dct(SizeType = 24, SizeType outputSize = 12);
     //    Dct(const Dct& orig);
         virtual ~Dct();
+        
+        std::vector<SampleType> apply(std::vector<SampleType> frame);
 
         /**
          * @brief execute DCT-II
          * @return vector
          */
-        std::vector<SampleType> execute(std::vector<SampleType> frame);
+//        std::vector<SampleType> execute(std::vector<SampleType> frame);
     private:
-        std::size_t mSize;
-        std::size_t mOutputSize;
+        SizeType mSize;
+        SizeType mOutputSize;
+        float    mZ;
+        vector2d mBank;
 
     };
 }
