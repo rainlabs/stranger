@@ -18,6 +18,7 @@
 #include "stranger/dct.hpp"
 #include "stranger/lifter.hpp"
 #include "stranger/mfcc.hpp"
+#include "stranger/vad.hpp"
 
 namespace Stranger {
     

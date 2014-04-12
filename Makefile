@@ -1,4 +1,6 @@
 CXX        = g++
+#CXXFLAGS   = -c -Wall -std=c++0x -fPIC -g
+#LDFLAGS    = -lsndfile -lfftw3 -shared
 CXXFLAGS   = -c -Wall -std=c++0x
 LDFLAGS    = -lsndfile -lfftw3
 #RDYNAMIC   = -rdynamic -lspro
@@ -14,8 +16,8 @@ TARGET     = vad
 
 ### DEBUG ENVIRONMENT
 debug: CXX      += -DDEBUG -g
-debug: BUILDDIR  = ./build/debug
-debug: BINDIR    = ./bin/debug
+#debug: BUILDDIR  = ./build/debug
+#debug: BINDIR    = ./bin/debug
 ###
 
 ### TEST ENVIRONMENT
@@ -48,14 +50,12 @@ $(BUILDDIR):
 	@mkdir -p $@
 
 $(BUILDDIR)/%.o: %.cpp
-	@echo $<
 	$(CXX) $(CXXFLAGS) $(INCLUDES) $< -o $@
 
 $(BUILDDIR)/%.o: $(SRCDIR)/%.cpp
 	$(CXX) $(CXXFLAGS) $(INCLUDES) $< -o $@
 
 $(BUILDDIR)/%.o: $(TESTDIR)/%.cpp
-	@echo $<
 	$(CXX) $(CXXFLAGS) $(INCLUDES) $< -o $@
 
 clean:

@@ -10,6 +10,7 @@
 
 #include "global.hpp"
 #include <math.h>
+#include <iostream>
 
 namespace Stranger {
     

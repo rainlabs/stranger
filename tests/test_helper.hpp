@@ -47,7 +47,7 @@ public:
             Gnuplot g;
             g.cmd("set terminal png size 1920, 1080");
             g.cmd(("set output \"" + filename + ".png\""));
-            g.cmd( ("plot \"" + filename + ".dat\" w lp") );
+            g.cmd( ("plot \"" + filename + ".dat\" w l") );
         } catch (GnuplotException ge) {
             std::cout << ge.what() << std::endl;
             return false;

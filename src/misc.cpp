@@ -11,6 +11,7 @@ namespace Stranger {
           ret += v * v;
         }
 
+//        std::cout << ret << std::endl;
         ret = sqrt(ret);
         
         if(logFlag) {

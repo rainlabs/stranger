@@ -17,7 +17,16 @@ namespace Stranger {
         mLifter = new Lifter(1, mDctSize);
     }
 
-    Mfcc::~Mfcc() {}
+    Mfcc::~Mfcc() {
+        if(mFft != nullptr)
+            delete mFft;
+        if(mTrifBank != nullptr)
+            delete mTrifBank;
+        if(mDct != nullptr)
+            delete mDct;
+        if(mLifter != nullptr)
+            delete mLifter;
+    }
     
     Mfcc& Mfcc::initializeFft(SizeType windowType) {
         if (mFft != nullptr) {

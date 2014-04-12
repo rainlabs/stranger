@@ -29,6 +29,8 @@ class TransformTest : public CPPUNIT_NS::TestFixture {
     CPPUNIT_TEST(plotLifterMfcc);
     CPPUNIT_TEST(plotEnergy);
     CPPUNIT_TEST(plotLogEnergy);
+    CPPUNIT_TEST(plotWavForm);
+    CPPUNIT_TEST(plotVad);
     CPPUNIT_TEST_SUITE_END();
 
 public:
@@ -44,6 +46,12 @@ private:
     void plotLifterMfcc();
     void plotEnergy();
     void plotLogEnergy();
+    void plotWavForm();
+    void plotVad();
+    
+    Signal mWav;
+    std::string mSoundFile;
+    SizeType mFftSize, mShift;
 };
 
 #endif	/* TRANSFORM_TEST_HPP */
