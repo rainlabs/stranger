@@ -26,13 +26,13 @@ test: BINDIR    = ./bin/test
 test: INCLUDES += -I./tests/
 test: TSOURCES  = $(shell find $(TESTDIR)/ -name '*.cpp')
 test: OBJECTS   = $(BUILDDIR)/$(MAIN:.cpp=.o) $(patsubst $(TESTDIR)/%.cpp,$(BUILDDIR)/%.o,$(TSOURCES)) $(patsubst $(SRCDIR)/%.cpp,$(BUILDDIR)/%.o,$(SOURCES))
-#LDFLAGS  += -lcppunit
-#MAIN      = TestRunner.cpp
-#BUILDDIR  = ./build/test
-#BINDIR    = ./bin/test
-#INCLUDES += -I./tests/
-#TSOURCES  = $(shell find $(TESTDIR)/ -name '*.cpp')
-#OBJECTS   = $(BUILDDIR)/$(MAIN:.cpp=.o) $(patsubst $(TESTDIR)/%.cpp,$(BUILDDIR)/%.o,$(TSOURCES)) $(patsubst $(SRCDIR)/%.cpp,$(BUILDDIR)/%.o,$(SOURCES))
+LDFLAGS  += -lcppunit
+MAIN      = TestRunner.cpp
+BUILDDIR  = ./build/test
+BINDIR    = ./bin/test
+INCLUDES += -I./tests/
+TSOURCES  = $(shell find $(TESTDIR)/ -name '*.cpp')
+OBJECTS   = $(BUILDDIR)/$(MAIN:.cpp=.o) $(patsubst $(TESTDIR)/%.cpp,$(BUILDDIR)/%.o,$(TSOURCES)) $(patsubst $(SRCDIR)/%.cpp,$(BUILDDIR)/%.o,$(SOURCES))
 ###
 
 release: $(MAIN) $(SOURCES) $(BINDIR)/$(TARGET)
@@ -60,3 +60,6 @@ $(BUILDDIR)/%.o: $(TESTDIR)/%.cpp
 
 clean:
 	find -name *.o -delete && find bin/ -name $(TARGET) -delete && rm -rf result/*
+
+gz:
+	tar czvf result_$(shell date +%Y%m%d%H%M%S).tar.gz result/*

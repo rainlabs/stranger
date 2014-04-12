@@ -9,6 +9,7 @@
 #define	STRANGER_HPP
 
 #include "global.hpp"
+#include "stranger_exception.hpp"
 #include "misc.hpp"
 #include "signal.hpp"
 #include "window.hpp"

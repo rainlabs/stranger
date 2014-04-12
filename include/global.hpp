@@ -12,9 +12,7 @@
 #include <string>
 #include <complex>
 #include <exception>
-#include <fftw3.h>
 
-#define FftwMalloc(type,n) (type *)fftw_malloc((n)*sizeof(type)) // from svm_train.c
 #define Malloc(type,n) (type *)malloc((n)*sizeof(type)) // from svm_train.c
 #define STRANGER_ENERGY_FLOOR 1.0 // from spro.h
 
@@ -34,7 +32,7 @@ namespace Stranger
      * Library version in an easily comparable format.
      * 0x00(MAJOR)00(MINOR)00(PATCH)
      */
-    const int VERSION = 0x000100;
+    const int VERSION = 0x000200;
     
     /**
      * Library status (dev, stable, beta, alpha)
@@ -42,7 +40,7 @@ namespace Stranger
     const char* const STATUS = "dev";
 
     /**
-     *
+     * Different size types (unsigned)
      */
     typedef unsigned short SizeType;
     

@@ -89,22 +89,16 @@ void TransformTest::plotMfcc() {
     vector2d matrix;
     std::vector<float> x, y;
     int i;
-    Fft fft(256, Window::HAMMING);
     wav.loadFromFile("fixtures/voice1.wav");
-    TrifBank bank(24, 256, wav.getSampleRate());
-    Dct dct;
     float hzInterval = 256.0 / wav.getSampleRate();
     vector2d frames = wav.split(SizeType(256), SizeType(128));
+    Mfcc mfcc(256, 24, 12);
+    mfcc.initializeFft(Window::HAMMING)
+            .initializeTrifBank(wav.getSampleRate());
     
     for(auto frame : frames) {
-        matrix.push_back( dct.apply( bank.apply( fft.execute(frame) ) ) );
+        matrix.push_back( mfcc.apply(frame) );
     }
-    
-//    for(i = 0; i < matrix.size(); i++) {
-//        for(int j = 0; j < matrix[i].size(); j++) {
-//            matrix[i][j] = log(matrix[i][j]);
-//        }
-//    }
     
     for(i = 0; i < matrix.size(); i++)
         x.push_back( i );
@@ -121,23 +115,17 @@ void TransformTest::plotLifterMfcc() {
     vector2d matrix;
     std::vector<float> x, y;
     int i;
-    Fft fft(256, Window::HAMMING);
     wav.loadFromFile("fixtures/voice1.wav");
-    TrifBank bank(24, 256, wav.getSampleRate());
-    Dct dct;
-    Lifter lifter(3, 12);
     float hzInterval = 256.0 / wav.getSampleRate();
     vector2d frames = wav.split(SizeType(256), SizeType(128));
+    Mfcc mfcc(256, 24, 12);
+    mfcc.initializeFft(Window::HAMMING)
+            .initializeTrifBank(wav.getSampleRate())
+            .initializeLifter(12);
     
     for(auto frame : frames) {
-        matrix.push_back( lifter.apply( dct.apply( bank.apply( fft.execute(frame) ) ) ) );
+        matrix.push_back( mfcc.apply(frame) );
     }
-    
-//    for(i = 0; i < matrix.size(); i++) {
-//        for(int j = 0; j < matrix[i].size(); j++) {
-//            matrix[i][j] = log(matrix[i][j]);
-//        }
-//    }
     
     for(i = 0; i < matrix.size(); i++)
         x.push_back( i );
@@ -155,15 +143,15 @@ void TransformTest::plotEnergy() {
     std::vector<SampleType> temp;
     std::vector<float> x, y;
     int i;
-    Fft fft(256, Window::HAMMING);
     wav.loadFromFile("fixtures/voice1.wav");
-    TrifBank bank(24, 256, wav.getSampleRate());
-    Dct dct;
     float hzInterval = 256.0 / wav.getSampleRate();
     vector2d frames = wav.split(SizeType(256), SizeType(128));
+    Mfcc mfcc(256, 24, 12);
+    mfcc.initializeFft(Window::HAMMING)
+            .initializeTrifBank(wav.getSampleRate());
     
     for(auto frame : frames) {
-        temp.push_back( Misc::energy(dct.apply( bank.apply( fft.execute(frame) ) ), false) );
+        temp.push_back( Misc::energy(mfcc.apply(frame), false) );
     }
     matrix.push_back(temp);
     
@@ -182,15 +170,15 @@ void TransformTest::plotLogEnergy() {
     std::vector<SampleType> temp;
     std::vector<float> x, y;
     int i;
-    Fft fft(256, Window::HAMMING);
     wav.loadFromFile("fixtures/voice1.wav");
-    TrifBank bank(24, 256, wav.getSampleRate());
-    Dct dct;
     float hzInterval = 256.0 / wav.getSampleRate();
     vector2d frames = wav.split(SizeType(256), SizeType(128));
+    Mfcc mfcc(256, 24, 12);
+    mfcc.initializeFft(Window::HAMMING)
+            .initializeTrifBank(wav.getSampleRate());
     
     for(auto frame : frames) {
-        temp.push_back( Misc::energy(dct.apply( bank.apply( fft.execute(frame) ) ), true) );
+        temp.push_back( Misc::energy(mfcc.apply(frame), true) );
     }
     matrix.push_back(temp);
     

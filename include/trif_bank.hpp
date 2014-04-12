@@ -9,6 +9,7 @@
 #define	TRIF_BANK_HPP
 
 #include "global.hpp"
+#include "stranger_exception.hpp"
 #include <math.h>
 
 #define Round(x) ((int)ceil(x) - x < x - (int)floor(x)) ? (int)ceil(x) : (int)floor(x)
@@ -25,7 +26,7 @@ namespace Stranger {
          * Set cut-off indexes on a alpha-transformed scale
          */
         TrifBank(float alpha, SizeType filterCount, SizeType fftSize, float sampleFreq, float minFreq = 0.0, float maxFreq = 0.0);
-//        TrifBank(const trif_bank& orig);
+
         virtual ~TrifBank();
         
         std::vector<SampleType> apply(SpectrumType fftOut);

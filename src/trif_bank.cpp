@@ -14,9 +14,8 @@ namespace Stranger {
         float f, d, z;
         endFreq = maxFreq;
         
-        // TODO exception
         if (filterCount == 0 || fftSize == 0 || sampleFreq <= 0 || minFreq < 0 || maxFreq < 0 ) {
-            throw std::exception();
+            throw StrangerException("Arguments have not valid size values");
         }
         
         mSize = filterCount;
@@ -49,9 +48,8 @@ namespace Stranger {
         float f, d, z;
         endFreq = maxFreq;
         
-        // TODO exception
         if (filterCount == 0 || fftSize == 0 || sampleFreq <= 0 || minFreq < 0 || maxFreq < 0 ) {
-            throw std::exception();
+            throw StrangerException("Arguments have not valid size values");
         }
         
         mSize = filterCount;

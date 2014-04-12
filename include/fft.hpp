@@ -9,7 +9,11 @@
 #define	FFT_HPP
 
 #include "global.hpp"
+#include "stranger_exception.hpp"
 #include "window.hpp"
+#include <fftw3.h>
+
+#define FftwMalloc(type,n) (type *)fftw_malloc((n)*sizeof(type)) // from svm_train.c
 
 namespace Stranger {
     
@@ -19,7 +23,6 @@ namespace Stranger {
     class STRANGER_EXPORT Fft {
     public:
         Fft(SizeType size = 512, SizeType windowType = 0);
-    //    Fft(const Fft& orig);
         virtual ~Fft();
         
         SpectrumType apply(std::vector<SampleType> frame);

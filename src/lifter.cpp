@@ -19,9 +19,8 @@ namespace Stranger {
     Lifter::~Lifter() {}
     
     std::vector<SampleType> Lifter::apply(std::vector<SampleType> frame) {
-        // TODO exception
         if(frame.size() != mBank.size()) {
-            throw std::exception();
+            throw StrangerException("frame size and lifter size are not the same");
         }
         std::size_t i;
         

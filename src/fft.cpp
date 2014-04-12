@@ -9,8 +9,8 @@
 
 namespace Stranger {
     
-    Fft::Fft(SizeType size, SizeType windowType) {
-        mSize = size;
+    Fft::Fft(SizeType size, SizeType windowType)
+        : mSize(size) {
         mWindow = Window::get(size, windowType);
     }
 
@@ -33,7 +33,7 @@ namespace Stranger {
         SizeType outSize = (size == 0) ? frame.size() : size;
 
         if(frame.size() != mSize) {
-            throw std::exception(); // TODO named errors
+            throw StrangerException("frame size and fft size are not the same");
         }
 
         in =  FftwMalloc(fftw_complex, mSize);

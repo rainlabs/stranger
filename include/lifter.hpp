@@ -9,6 +9,7 @@
 #define	LIFTER_HPP
 
 #include "global.hpp"
+#include "stranger_exception.hpp"
 #include <math.h>
 #include "transform.hpp"
 

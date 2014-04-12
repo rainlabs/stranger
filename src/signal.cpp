@@ -47,9 +47,8 @@ namespace Stranger {
         SizeType step;
         step = shift;
         
-        // TODO exception
         if (size == 0) {
-            throw std::exception();
+            throw StrangerException("Split size can't be zero");
         }
         
         /* set default shift as size */

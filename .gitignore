@@ -11,3 +11,6 @@ result/
 # Build files
 build/
 bin/
+
+# result gz
+result_*.tar.gz
