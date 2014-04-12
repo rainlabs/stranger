@@ -5,7 +5,7 @@
  * Created on 11 апреля 2014 г., 14:18
  */
 
-#include "trif_bank.hpp"
+#include "stranger/trif_bank.hpp"
 
 namespace Stranger {
     TrifBank::TrifBank(SizeType filterCount, SizeType fftSize, float sampleFreq, float minFreq, float maxFreq) {

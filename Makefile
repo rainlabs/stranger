@@ -26,13 +26,13 @@ test: BINDIR    = ./bin/test
 test: INCLUDES += -I./tests/
 test: TSOURCES  = $(shell find $(TESTDIR)/ -name '*.cpp')
 test: OBJECTS   = $(BUILDDIR)/$(MAIN:.cpp=.o) $(patsubst $(TESTDIR)/%.cpp,$(BUILDDIR)/%.o,$(TSOURCES)) $(patsubst $(SRCDIR)/%.cpp,$(BUILDDIR)/%.o,$(SOURCES))
-LDFLAGS  += -lcppunit
-MAIN      = TestRunner.cpp
-BUILDDIR  = ./build/test
-BINDIR    = ./bin/test
-INCLUDES += -I./tests/
-TSOURCES  = $(shell find $(TESTDIR)/ -name '*.cpp')
-OBJECTS   = $(BUILDDIR)/$(MAIN:.cpp=.o) $(patsubst $(TESTDIR)/%.cpp,$(BUILDDIR)/%.o,$(TSOURCES)) $(patsubst $(SRCDIR)/%.cpp,$(BUILDDIR)/%.o,$(SOURCES))
+#LDFLAGS  += -lcppunit
+#MAIN      = TestRunner.cpp
+#BUILDDIR  = ./build/test
+#BINDIR    = ./bin/test
+#INCLUDES += -I./tests/
+#TSOURCES  = $(shell find $(TESTDIR)/ -name '*.cpp')
+#OBJECTS   = $(BUILDDIR)/$(MAIN:.cpp=.o) $(patsubst $(TESTDIR)/%.cpp,$(BUILDDIR)/%.o,$(TSOURCES)) $(patsubst $(SRCDIR)/%.cpp,$(BUILDDIR)/%.o,$(SOURCES))
 ###
 
 release: $(MAIN) $(SOURCES) $(BINDIR)/$(TARGET)

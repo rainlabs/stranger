@@ -5,7 +5,7 @@
  * Created on 10 апреля 2014 г., 22:41
  */
 
-#include "fft.hpp"
+#include "stranger/fft.hpp"
 
 namespace Stranger {
     

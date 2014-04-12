@@ -5,7 +5,7 @@
  * Created on 10 апреля 2014 г., 21:31
  */
 
-#include "mfcc.hpp"
+#include "stranger/mfcc.hpp"
 
 namespace Stranger {
     Mfcc::Mfcc(SizeType fftSize, SizeType trifBankSize, SizeType outSize) 

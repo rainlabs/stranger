@@ -8,16 +8,16 @@
 #ifndef STRANGER_HPP
 #define	STRANGER_HPP
 
-#include "global.hpp"
-#include "stranger_exception.hpp"
-#include "misc.hpp"
-#include "signal.hpp"
-#include "window.hpp"
-#include "trif_bank.hpp"
-#include "fft.hpp"
-#include "dct.hpp"
-#include "lifter.hpp"
-#include "mfcc.hpp"
+#include "stranger/global.hpp"
+#include "stranger/stranger_exception.hpp"
+#include "stranger/misc.hpp"
+#include "stranger/signal.hpp"
+#include "stranger/window.hpp"
+#include "stranger/trif_bank.hpp"
+#include "stranger/fft.hpp"
+#include "stranger/dct.hpp"
+#include "stranger/lifter.hpp"
+#include "stranger/mfcc.hpp"
 
 namespace Stranger {
     

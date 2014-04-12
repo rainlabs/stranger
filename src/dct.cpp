@@ -5,7 +5,7 @@
  * Created on 10 апреля 2014 г., 23:19
  */
 
-#include "dct.hpp"
+#include "stranger/dct.hpp"
 
 namespace Stranger {
     

@@ -1,4 +1,4 @@
-#include "window.hpp"
+#include "stranger/window.hpp"
 
 namespace Stranger {
     

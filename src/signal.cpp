@@ -1,4 +1,4 @@
-#include "signal.hpp"
+#include "stranger/signal.hpp"
 
 namespace Stranger {
     

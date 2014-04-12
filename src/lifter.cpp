@@ -5,7 +5,7 @@
  * Created on 11 апреля 2014 г., 21:41
  */
 
-#include "lifter.hpp"
+#include "stranger/lifter.hpp"
 
 namespace Stranger {
     Lifter::Lifter(int l, SizeType size) {

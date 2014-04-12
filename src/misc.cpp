@@ -1,4 +1,4 @@
-#include "misc.hpp"
+#include "stranger/misc.hpp"
 
 namespace Stranger {
     SampleType Misc::energy(std::vector<SampleType> frame, bool logFlag) {
