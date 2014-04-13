@@ -10,7 +10,7 @@
 CPPUNIT_TEST_SUITE_REGISTRATION(TransformTest);
 
 TransformTest::TransformTest() {
-    mSoundFile = "fixtures/voice1.wav";
+    mSoundFile = "fixtures/ee.wav";
     mWav.loadFromFile(mSoundFile);
     mFftSize = Misc::msToFrameSize(30, mWav.getSampleRate());
     mShift = Misc::msToFrameSize(15, mWav.getSampleRate());
@@ -84,18 +84,25 @@ void TransformTest::plotDftOnTrifBank() {
 }
 
 void TransformTest::plotMfcc() {
+//    FILE* file = fopen("9mfccraw.pcm", "wb");
     std::string filename = "result/2mfcc";
     vector2d matrix;
     std::vector<float> x, y;
     int i;
+//    float tmp;
     float hzInterval = (float) mFftSize / mWav.getSampleRate();
     vector2d frames = mWav.split(SizeType(mFftSize), SizeType(mShift));
     Mfcc mfcc(mFftSize, 24, 12);
     mfcc.initializeFft(Window::HAMMING)
             .initializeTrifBank(mWav.getSampleRate());
+//            .initializeLifter(12);
     
     for(auto frame : frames) {
         matrix.push_back( mfcc.apply(frame) );
+//        for(auto m : matrix.back()) {
+//            tmp = m;
+//            fwrite(&tmp, sizeof(float), 1, file);
+//        }
     }
     
     for(i = 0; i < matrix.size(); i++)
@@ -105,6 +112,7 @@ void TransformTest::plotMfcc() {
     
     TestHelper::saveMatrix(matrix, x, y, filename);
     TestHelper::plotMatrix(filename);
+//    fclose(file);
 }
 
 void TransformTest::plotLifterMfcc() {
@@ -206,20 +214,29 @@ void TransformTest::plotWavForm() {
 void TransformTest::plotVad() {
     std::string filename = "result/7vad";
     vector2d matrix;
-    std::vector<SampleType> temp;
     std::vector<float> x;
     int i;
-    Vad vad;
-    vad.loadSignal(mSoundFile)
-            .setDuration(30)
-            .setShift(15);
+    Vad vad("result/9svm.db", Vad::TRAIN);
+    vad.setDuration(30).setShift(15);
     
-    auto b = vad.process();
+    vad.loadSignal("fixtures/voice1.wav")
+            .setVoice()
+            .process();
+    vad.loadSignal("fixtures/white_noize.wav").destroyMfcc()
+            .setSilence()
+            .process();
+    vad.loadSignal("fixtures/mike.wav").destroyMfcc()
+            .setVoice()
+            .process();
+    vad.loadSignal("fixtures/sin.wav").destroyMfcc()
+            .setSilence()
+            .process();
+    vad.saveSVM();
     
-    for(auto d : b) {
-        temp.push_back(d);
-    }
-    matrix.push_back(temp);
+//    Vad vad2("result/9svm.db");
+//    vad2.setDuration(30).setShift(15).loadSignal("fixtures/sin.wav");
+    vad.destroyMfcc().setMode(Vad::PREDICT).loadSignal(mSoundFile);
+    matrix.push_back(vad.process());
     
     for(i = 0; i < matrix.back().size(); i++) {
         x.push_back( i );

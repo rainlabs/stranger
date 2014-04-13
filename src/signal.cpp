@@ -43,7 +43,7 @@ namespace Stranger {
 
     vector2d Signal::split(SizeType size, SizeType shift) {
         vector2d ret;
-        std::size_t i;
+        std::size_t i, j;
         SizeType step;
         step = shift;
         
@@ -60,6 +60,11 @@ namespace Stranger {
         for(i = 0; i < mSamples.size() - size; i+= step) {
             std::vector<SampleType> vec;
             vec.insert(vec.end(), mSamples.begin() + i, mSamples.begin() + i + size);
+//            if (vec.size() < size) {
+//                for(j = vec.size(); j < size; j++) {
+//                    vec.push_back(0.0);
+//                }
+//            }
             ret.push_back(vec);
         }
 

@@ -2,7 +2,7 @@ CXX        = g++
 #CXXFLAGS   = -c -Wall -std=c++0x -fPIC -g
 #LDFLAGS    = -lsndfile -lfftw3 -shared
 CXXFLAGS   = -c -Wall -std=c++0x
-LDFLAGS    = -lsndfile -lfftw3
+LDFLAGS    = -lsndfile -lfftw3 -lsvm # -lm -lpthread -lcCNN
 #RDYNAMIC   = -rdynamic -lspro
 SRCDIR     = src
 TESTDIR    = tests

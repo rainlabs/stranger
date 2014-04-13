@@ -8,10 +8,11 @@
 #include "stranger/vad.hpp"
 
 namespace Stranger {
-    Vad::Vad()
-        : mDuration(0), mShift(0), mLifterInd(1) {
-        mMfcc = nullptr;
+    Vad::Vad(std::string svmDB, int mode)
+        : mDuration(0), mShift(0), mLifterInd(1), mMode(mode), mVoice(+1), mSvmDb(svmDB) {
+        mMfcc   = nullptr;
         mSignal = nullptr;
+        mSvm    = nullptr;
     }
 
     Vad::~Vad() {
@@ -54,6 +55,38 @@ namespace Stranger {
         return (*this);
     }
     
+    Vad& Vad::setVoice() {
+        mVoice = +1;
+        return (*this);
+    }
+    
+    Vad& Vad::setSilence() {
+        mVoice = -1;
+        return (*this);
+    }
+    
+    Vad& Vad::setMode(int mode) {
+        mMode = mode;
+        return (*this);
+    }
+    
+    Vad& Vad::saveSVM() {
+        if(mSvm == nullptr) {
+            throw StrangerException("SVM not specified");
+        }
+        mSvm->train();
+        mSvm->save(mSvmDb);
+        return (*this);
+    }
+    
+    Vad& Vad::trainSVM() {
+        if(mSvm == nullptr) {
+            throw StrangerException("SVM not specified");
+        }
+        mSvm->train();
+        return (*this);
+    }
+    
     Vad& Vad::destroyMfcc() {
         if(mMfcc != nullptr)
             delete mMfcc;
@@ -61,11 +94,12 @@ namespace Stranger {
         return (*this);
     }
     
-    std::vector<bool> Vad::process() {
-        std::vector<bool> ret;
+    std::vector<SampleType> Vad::process() {
+        std::vector<SampleType> ret;
         SizeType duration = Misc::msToFrameSize(mDuration, mSignal->getSampleRate());
         SizeType shift = Misc::msToFrameSize(mShift, mSignal->getSampleRate());
         float threshold = 2.5;
+        SizeType mfccCount = 16, frameCount = 1;
         
         if(!initialized()) {
             if (mSignal == nullptr) {
@@ -74,21 +108,39 @@ namespace Stranger {
             mMfcc = new Mfcc( 
                     duration,
                     24,
-                    16
+                    mfccCount
                 );
             mMfcc->initializeFft(Window::HAMMING)
-                    .initializeTrifBank(mSignal->getSampleRate())
+                    .initializeTrifBank(mSignal->getSampleRate(), 0.0, (4500.0 / mSignal->getSampleRate()) )
                     .initializeLifter(mLifterInd);
         }
+        
+        if (mSvm == nullptr) {
+            mSvm = new SVM(mfccCount * frameCount, mSvmDb);
+            if(mMode == PREDICT) {
+                mSvm->load(mSvmDb);
+            }
+        }
+        std::vector<SampleType> bank;
         
         vector2d frames = mSignal->split(duration, shift);
         
         for(auto frame : frames) {
-            if( Misc::energy(mMfcc->apply(frame), true) < threshold ) {
-                ret.push_back(false);
-            } else {
-                ret.push_back(true);
+            auto features = mMfcc->apply(frame);
+            bank.insert(bank.end(), features.begin(), features.end());
+            if (bank.size() == (mfccCount*frameCount)) {
+                if (mMode == PREDICT) {
+                    ret.push_back (mSvm->predict(bank) );
+                } else if (mMode == TRAIN) {
+                    mSvm->push_back(bank, mVoice);
+                }
+                bank.clear();
             }
+//            if( Misc::energy(mMfcc->apply(frame), true) < threshold ) {
+//                ret.push_back(false);
+//            } else {
+//                ret.push_back(true);
+//            }
         }
         
         return ret;

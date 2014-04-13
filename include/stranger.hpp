@@ -8,17 +8,19 @@
 #ifndef STRANGER_HPP
 #define	STRANGER_HPP
 
-#include "stranger/global.hpp"
+#include "stranger/global.hpp"               // Common definitions
 #include "stranger/stranger_exception.hpp"
-#include "stranger/misc.hpp"
-#include "stranger/signal.hpp"
-#include "stranger/window.hpp"
-#include "stranger/trif_bank.hpp"
-#include "stranger/fft.hpp"
-#include "stranger/dct.hpp"
-#include "stranger/lifter.hpp"
-#include "stranger/mfcc.hpp"
-#include "stranger/vad.hpp"
+#include "stranger/misc.hpp"                 // Any Non object functions
+#include "stranger/signal.hpp"               // Sound Source
+#include "stranger/window.hpp"               // TODO rework class to transform
+#include "stranger/trif_bank.hpp"            // Triangular filter bank with mel or alpha scale
+#include "stranger/fft.hpp"                  // DFT(!) transform using libFFTW3, TODO rename and rework
+#include "stranger/dct.hpp"                  // DCT-II transform, TODO move to libFFTW3
+#include "stranger/lifter.hpp"               // Liftering transform
+#include "stranger/mfcc.hpp"                 // MFCC features extraction
+#include "stranger/svm.hpp"                  // Support Vector Machine, using libSVM
+//#include "stranger/cnn.hpp"                  // Convolutional Neural Network, TODO need implementation
+#include "stranger/vad.hpp"                  // Voice Activity Detector
 
 namespace Stranger {
     

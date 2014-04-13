@@ -13,6 +13,7 @@
 #include "signal.hpp"
 #include "misc.hpp"
 #include "mfcc.hpp"
+#include "svm.hpp"
 #include <math.h>
 #include <algorithm>
 
@@ -25,10 +26,22 @@ namespace Stranger {
     
     class Vad {
     public:
-        Vad();
+        enum Mode {
+            TRAIN,
+            PREDICT
+        };
+        
+        Vad(std::string svmDB, int mode=PREDICT);
         virtual ~Vad();
         
         Vad& loadSignal(std::string filename);
+        
+        Vad& setVoice();
+        Vad& setSilence();
+        Vad& setMode(int mode);
+        
+        Vad& trainSVM();
+        Vad& saveSVM();
         
         /**
          * VAD Techniques for Real-Time Speech Transmission on the Internet
@@ -43,13 +56,17 @@ namespace Stranger {
         Vad& destroyMfcc();
         
         bool initialized();
-        std::vector<bool> process();
+        std::vector<SampleType> process();
     private:
         SizeType mDuration;
         SizeType mShift;
         SizeType mLifterInd;
         Signal*  mSignal;
         Mfcc*    mMfcc;
+        SVM*     mSvm;
+        std::string mSvmDb;
+        int      mMode;
+        int      mVoice;
 
     };
 }
