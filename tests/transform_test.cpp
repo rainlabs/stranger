@@ -10,7 +10,7 @@
 CPPUNIT_TEST_SUITE_REGISTRATION(TransformTest);
 
 TransformTest::TransformTest() {
-    mSoundFile = "fixtures/ee.wav";
+    mSoundFile = "fixtures/sample.wav";
     mWav.loadFromFile(mSoundFile);
     mFftSize = Misc::msToFrameSize(30, mWav.getSampleRate());
     mShift = Misc::msToFrameSize(15, mWav.getSampleRate());
@@ -136,6 +136,15 @@ void TransformTest::plotLifterMfcc() {
     for(i = 0; i < matrix.back().size(); i++)
         y.push_back( i );
     
+    FILE* file = fopen("result/mfcc.pcm", "wb");
+    for (auto m : matrix) {
+        for(SampleType val : m) {
+            float temp = (float) val;
+            fwrite(&temp, sizeof(float), 1, file);
+        }
+    }
+    fclose(file);
+    
     TestHelper::saveMatrix(matrix, x, y, filename);
     TestHelper::plotMatrix(filename);
 }
@@ -216,7 +225,7 @@ void TransformTest::plotVad() {
     vector2d matrix;
     std::vector<float> x;
     int i;
-    Vad vad("result/9svm.db", Vad::TRAIN);
+    Vad vad("result/9svm.model", Vad::TRAIN);
     vad.setDuration(30).setShift(15);
     
     vad.loadSignal("fixtures/voice1.wav")

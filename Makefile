@@ -59,7 +59,7 @@ $(BUILDDIR)/%.o: $(TESTDIR)/%.cpp
 	$(CXX) $(CXXFLAGS) $(INCLUDES) $< -o $@
 
 clean:
-	find -name *.o -delete && find bin/ -name $(TARGET) -delete && rm -rf result/*
+	find -name *.o -delete && rm -rf result/*
 
 gz:
 	tar czvf result_$(shell date +%Y%m%d%H%M%S).tar.gz result/*

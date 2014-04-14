@@ -9,7 +9,8 @@
 
 namespace Stranger {
     Vad::Vad(std::string svmDB, int mode)
-        : mDuration(0), mShift(0), mLifterInd(1), mMode(mode), mVoice(+1), mSvmDb(svmDB) {
+        : mDuration(0), mShift(0), mLifterInd(1),
+            mMode(mode), mVoice(+1), mSvmDb(svmDB), mFrameSize(1) {
         mMfcc   = nullptr;
         mSignal = nullptr;
         mSvm    = nullptr;
@@ -70,6 +71,12 @@ namespace Stranger {
         return (*this);
     }
     
+    Vad& Vad::setFrame(SizeType size) {
+        if (mFrameSize != 0)
+            mFrameSize = size;
+        return (*this);
+    }
+    
     Vad& Vad::saveSVM() {
         if(mSvm == nullptr) {
             throw StrangerException("SVM not specified");
@@ -99,7 +106,7 @@ namespace Stranger {
         SizeType duration = Misc::msToFrameSize(mDuration, mSignal->getSampleRate());
         SizeType shift = Misc::msToFrameSize(mShift, mSignal->getSampleRate());
         float threshold = 2.5;
-        SizeType mfccCount = 16, frameCount = 1;
+        SizeType mfccCount = 16;
         
         if(!initialized()) {
             if (mSignal == nullptr) {
@@ -116,7 +123,7 @@ namespace Stranger {
         }
         
         if (mSvm == nullptr) {
-            mSvm = new SVM(mfccCount * frameCount, mSvmDb);
+            mSvm = new SVM(mfccCount * mFrameSize, mSvmDb);
             if(mMode == PREDICT) {
                 mSvm->load(mSvmDb);
             }
@@ -128,7 +135,7 @@ namespace Stranger {
         for(auto frame : frames) {
             auto features = mMfcc->apply(frame);
             bank.insert(bank.end(), features.begin(), features.end());
-            if (bank.size() == (mfccCount*frameCount)) {
+            if (bank.size() == (mfccCount*mFrameSize)) {
                 if (mMode == PREDICT) {
                     ret.push_back (mSvm->predict(bank) );
                 } else if (mMode == TRAIN) {

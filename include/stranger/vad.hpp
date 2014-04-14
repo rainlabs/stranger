@@ -39,6 +39,7 @@ namespace Stranger {
         Vad& setVoice();
         Vad& setSilence();
         Vad& setMode(int mode);
+        Vad& setFrame(SizeType size);
         
         Vad& trainSVM();
         Vad& saveSVM();
@@ -67,6 +68,7 @@ namespace Stranger {
         std::string mSvmDb;
         int      mMode;
         int      mVoice;
+        SizeType mFrameSize;
 
     };
 }

@@ -78,7 +78,7 @@ namespace Stranger {
 
     struct svm_problem* SVM::initializeProblem() {
         struct svm_problem* problem = Malloc(svm_problem, 1);
-        int i, j, n = 0;
+        int i, j, n = 0, k = 0;
         struct svm_node* xSpace;
         
         problem->l = (int) mTrainCls.size();
@@ -91,7 +91,7 @@ namespace Stranger {
             problem->x[i] = &xSpace[n];
             for(j = 0; j < mFeaturesCount; j++) {
                 xSpace[n].index = j + 1;
-                xSpace[n++].value = mTrainData[i*mFeaturesCount + j];
+                xSpace[n++].value = mTrainData[k++];
             }
             xSpace[n++].index = -1;
         }
