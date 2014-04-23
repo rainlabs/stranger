@@ -17,9 +17,9 @@ typedef std::vector< std::vector<double> > vector2d;
 
 class TestHelper {
 public:
-    static bool savePoints(vector2d vec, std::vector<float> x, const std::string& filename) {
+    static bool savePoints(vector2d vec, std::vector<float> x, const std::string& filename, int color = 0) {
         std::ofstream file;
-        file.open((filename + ".dat").data(), std::ios::out | std::ios::trunc);
+        file.open((filename + ".dat").data(), std::ios::out | std::ios::app);
         float tmp;
         int i, j;
         tmp = x.size();
@@ -31,11 +31,12 @@ public:
 //        }
         for(j = 0; j < vec.size(); j++) {
             for(i = 0; i < x.size(); i++) {
-                file << x[i] << " " << vec[j][i] << std::endl;
+                file << x[i] << " " << vec[j][i] << " " << color << std::endl;
 //                fwrite(&x[i], sizeof(float), 1, file);
 //                tmp = vec[j][i];
 //                fwrite(&tmp, sizeof(float), 1, file);
             }
+            file << std::endl;
             file << std::endl;
         }
         

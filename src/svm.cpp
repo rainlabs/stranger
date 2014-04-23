@@ -27,12 +27,13 @@ namespace Stranger {
     
     bool SVM::save(std::string filename) {
         setFilename(filename);
-        svm_save_model(mFilename.c_str(),mModel);
+        int flag = svm_save_model(mFilename.c_str(),mModel);
         return true;
     }
     
     void SVM::setFilename(std::string filename) {
-        mFilename = filename;
+        if (filename.size() > 0)
+            mFilename = filename;
     }
     
     void SVM::push_back(std::vector<SampleType> features, SampleType cls) {
@@ -109,7 +110,7 @@ namespace Stranger {
         parameter->nu           = 0.5;                  // NU_SVC, ONE_CLASS, NU_SVR
         parameter->cache_size   = 100;                  // in MB
         parameter->C            = 4;                    // C_SVC, EPSILON_SVR, NU_SVR
-        parameter->eps          = 0.0001;               // stopping criteria
+        parameter->eps          = 0.001;               // stopping criteria
         parameter->p            = 0.1;                  // EPSILON_SVR
         parameter->shrinking    = 1;                    // use the shrinking heuristics
         parameter->probability  = 0;                    // do probability estimates

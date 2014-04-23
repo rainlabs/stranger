@@ -57,5 +57,36 @@ namespace Stranger {
             throw StrangerException("Some transform not defined yet!");
         }
         return mLifter->apply( mDct->apply( mTrifBank->apply( mFft->execute(frame) ) ) );
+//        return Misc::meanNormalize( mLifter->apply( mDct->apply( mTrifBank->apply( mFft->execute(frame) ) ) ) );
+    }
+    
+    vector2d Mfcc::delta(vector2d mfccFeatures, SizeType N) {
+        vector2d ret;
+        SampleType sum1, sum2;
+        SizeType mfccSize = mfccFeatures.front().size();
+        std::size_t i, t, n;
+        int left, right;
+        if (N == 0) {
+            throw StrangerException("\"n\" must be greater than zero");
+        }
+        for(t = 0; t < mfccFeatures.size(); t++) {
+            std::vector<SampleType> vec;
+            for(i = 0; i < mfccSize; i++) {
+                sum1 = 0; sum2 = 0;
+                for(n = 1; n <= N; n++) {
+                    left = t - n;
+                    right = t + n;
+                    if (left < 0)
+                        left = 0;
+                    if (right > mfccFeatures.size() - 1)
+                        right = mfccFeatures.size() - 1;
+                    sum1 += n * (mfccFeatures[right][i] - mfccFeatures[left][i]);
+                    sum2 += (n*n);
+                }
+                vec.push_back( sum1 / (2.0*sum2) );
+            }
+            ret.push_back( vec );
+        }
+        return ret;
     }
 }

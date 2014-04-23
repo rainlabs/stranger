@@ -32,6 +32,14 @@ namespace Stranger {
         Mfcc& initializeLifter(int l);
         
         /**
+         * @brief compute delta coefficients
+         * @param mfccFeatures static or first delta features
+         * @param N range
+         * @return 
+         */
+        static vector2d delta(vector2d mfccFeatures, SizeType N=1);
+        
+        /**
          * @brief apply MFCC transform at frame
          * @param frame of signal
          * @return 

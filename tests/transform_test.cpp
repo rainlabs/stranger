@@ -10,7 +10,7 @@
 CPPUNIT_TEST_SUITE_REGISTRATION(TransformTest);
 
 TransformTest::TransformTest() {
-    mSoundFile = "fixtures/sample.wav";
+    mSoundFile = "fixtures/samplePalette.wav";
     mWav.loadFromFile(mSoundFile);
     mFftSize = Misc::msToFrameSize(30, mWav.getSampleRate());
     mShift = Misc::msToFrameSize(15, mWav.getSampleRate());
@@ -115,6 +115,31 @@ void TransformTest::plotMfcc() {
 //    fclose(file);
 }
 
+void TransformTest::plotDeltaMfcc() {
+    std::string filename = "result/2mfcc_delta";
+    vector2d matrix;
+    std::vector<float> x, y;
+    int i;
+    float hzInterval = (float) mFftSize / mWav.getSampleRate();
+    vector2d frames = mWav.split(SizeType(mFftSize), SizeType(mShift));
+    Mfcc mfcc(mFftSize, 24, 12);
+    mfcc.initializeFft(Window::HAMMING)
+            .initializeTrifBank(mWav.getSampleRate());
+    
+    for(auto frame : frames) {
+        matrix.push_back( mfcc.apply(frame) );
+    }
+    auto matrix2 = Mfcc::delta(matrix, 2);
+    
+    for(i = 0; i < matrix2.size(); i++)
+        x.push_back( i );
+    for(i = 0; i < matrix2.back().size(); i++)
+        y.push_back( i );
+    
+    TestHelper::saveMatrix(matrix2, x, y, filename);
+    TestHelper::plotMatrix(filename);
+}
+
 void TransformTest::plotLifterMfcc() {
     std::string filename = "result/3liftermfcc";
     vector2d matrix;
@@ -125,7 +150,7 @@ void TransformTest::plotLifterMfcc() {
     Mfcc mfcc(mFftSize, 24, 12);
     mfcc.initializeFft(Window::HAMMING)
             .initializeTrifBank(mWav.getSampleRate())
-            .initializeLifter(12);
+            .initializeLifter(4);
     
     for(auto frame : frames) {
         matrix.push_back( mfcc.apply(frame) );
@@ -213,44 +238,27 @@ void TransformTest::plotWavForm() {
     matrix.push_back(temp);
     
     for(i = 0; i < matrix.back().size(); i++) {
-        x.push_back( i * (1.0 / mShift ) );
+        x.push_back( i * (1.0 / mShift ) * 0.015 );
     }
     
     TestHelper::savePoints(matrix, x, filename);
-    TestHelper::plotPoints(filename);
+//    TestHelper::plotPoints(filename);
 }
 
 void TransformTest::plotVad() {
-    std::string filename = "result/7vad";
+    std::string filename = "result/6wav";
     vector2d matrix;
     std::vector<float> x;
     int i;
-    Vad vad("result/9svm.model", Vad::TRAIN);
-    vad.setDuration(30).setShift(15);
-    
-    vad.loadSignal("fixtures/voice1.wav")
-            .setVoice()
-            .process();
-    vad.loadSignal("fixtures/white_noize.wav").destroyMfcc()
-            .setSilence()
-            .process();
-    vad.loadSignal("fixtures/mike.wav").destroyMfcc()
-            .setVoice()
-            .process();
-    vad.loadSignal("fixtures/sin.wav").destroyMfcc()
-            .setSilence()
-            .process();
-    vad.saveSVM();
-    
-//    Vad vad2("result/9svm.db");
-//    vad2.setDuration(30).setShift(15).loadSignal("fixtures/sin.wav");
-    vad.destroyMfcc().setMode(Vad::PREDICT).loadSignal(mSoundFile);
-    matrix.push_back(vad.process());
+    Vad vad;
+    vad.setDuration(30).setShift(15).setLifterIndex(3).setFrame(10).loadSignal("fixtures/samplePalette.wav");
+//    vad.process(Vad::TRAIN);
+    matrix.push_back(vad.loadSignal(mSoundFile).destroyMfcc().process());
     
     for(i = 0; i < matrix.back().size(); i++) {
-        x.push_back( i );
+        x.push_back( i * 0.015 /* 10*/ );
     }
     
-    TestHelper::savePoints(matrix, x, filename);
-    TestHelper::plotPoints(filename);
+    TestHelper::savePoints(matrix, x, filename, 1);
+//    TestHelper::plotPoints(filename);
 }

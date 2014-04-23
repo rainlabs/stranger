@@ -26,6 +26,7 @@ class TransformTest : public CPPUNIT_NS::TestFixture {
     CPPUNIT_TEST(plotDft);
     CPPUNIT_TEST(plotDftOnTrifBank);
     CPPUNIT_TEST(plotMfcc);
+    CPPUNIT_TEST(plotDeltaMfcc);
     CPPUNIT_TEST(plotLifterMfcc);
     CPPUNIT_TEST(plotEnergy);
     CPPUNIT_TEST(plotLogEnergy);
@@ -43,6 +44,7 @@ private:
     void plotDft();
     void plotDftOnTrifBank();
     void plotMfcc();
+    void plotDeltaMfcc();
     void plotLifterMfcc();
     void plotEnergy();
     void plotLogEnergy();

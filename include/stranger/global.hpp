@@ -32,7 +32,7 @@ namespace Stranger
      * Library version in an easily comparable format.
      * 0x00(MAJOR)00(MINOR)00(PATCH)
      */
-    const int VERSION = 0x000200;
+    const int VERSION = 0x000300;
     
     /**
      * Library status (dev, stable, beta, alpha)

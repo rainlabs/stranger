@@ -10,6 +10,7 @@
 
 #include "global.hpp"
 #include <math.h>
+#include <algorithm>
 #include <iostream>
 
 namespace Stranger {
@@ -39,6 +40,36 @@ namespace Stranger {
         * @return frame size
         */
        static SizeType msToFrameSize(SizeType ms, SizeType sampleRate);
+       
+       /**
+        * @brief substract mean for each element
+        * @param values
+        * @return 
+        */
+       static std::vector<SampleType> meanNormalize(std::vector<SampleType> values);
+       
+       /**
+        * @brief compute flatness of vector values
+        * @param features
+        * @return 
+        */
+       static SampleType flatness(std::vector<SampleType> features);
+       
+       /**
+        * @brief Flatten stl 2 dimensional structure into 1
+        * COCiter - Container of Containers Iterator
+        * Oiter - Output Iterator
+        * @param start iterator
+        * @param end iterator
+        * @param dest destination end iterator
+        */
+       template <class COCiter, class Oiter>
+        static void flatten (COCiter start, COCiter end, Oiter dest) {
+            while (start != end) {
+                dest = std::copy(start->begin(), start->end(), dest);
+                ++start;
+            }
+        }
     };
     
 }

@@ -42,4 +42,30 @@ namespace Stranger {
     SizeType Misc::msToFrameSize(SizeType ms, SizeType sampleRate) {
         return SizeType(ms / 1000.0 * sampleRate);
     }
+    
+    SampleType Misc::flatness(std::vector<SampleType> features) {
+//        SampleType ret = 0, g = 1, a = 0;
+        SampleType ret = 0, g = 0, a = 0;
+        for(SampleType v : features) {
+            a += v;
+//            g *= v;
+            g += log(v);
+        }
+        a /= features.size();
+//        g = pow(g, 1.0/features.size());
+        g = exp(g / features.size());
+        ret = g / a;
+        return ret;
+    }
+    
+    std::vector<SampleType> Misc::meanNormalize(std::vector<SampleType> values) {
+        SampleType mean = std::accumulate(values.begin(), values.end(), 0.0) / values.size();
+        std::vector<SampleType> ret(values);
+        
+        for(std::size_t i = 0; i < ret.size(); i++) {
+            ret[i] -= mean;
+        }
+        
+        return ret;
+    }
 }

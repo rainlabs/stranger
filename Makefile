@@ -62,4 +62,4 @@ clean:
 	find -name *.o -delete && rm -rf result/*
 
 gz:
-	tar czvf result_$(shell date +%Y%m%d%H%M%S).tar.gz result/*
+	tar czvf results_$(shell date +%Y%m%d%H%M%S).tar.gz results/*
